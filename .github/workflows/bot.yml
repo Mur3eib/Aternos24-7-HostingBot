@@ -2,8 +2,6 @@ name: Minecraft AFK Bot
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron: '*/30 * * * *'
 
 concurrency:
   group: minecraft-afk-bot
