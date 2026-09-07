@@ -2,14 +2,13 @@ name: Minecraft AFK Bot
 
 on: 
   workflow_dispatch:
-
-concurrency:
-  group: minecraft-afk-bot
-  cancel-in-progress: true
+  schedule:
+    - cron: '0 */5 * * *' # بيشتغل تلقائياً كل 5 ساعات
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 345 # بيقفل الـ Job أوتوماتيك بعد 5 ساعات و 45 دقيقة (قبل حد الـ 6 ساعات)
 
     steps:
       - name: Checkout Repository
@@ -23,9 +22,5 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Start Bot with Auto-Restart
-        run: |
-          while true; do
-            node --max-old-space-size=256 index.js || echo "Bot crashed, restarting in 5 seconds..."
-            sleep 5
-          done
+      - name: Start Bot
+        run: node --max-old-space-size=256 index.js
